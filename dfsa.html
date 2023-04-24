@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Black Page with Falling Letters and Numbers</title>
+    <style>
+      body {
+        background-color: black;
+        color: #20C20E;
+        font-size: 24px;
+        position: relative;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      // Add falling letters and numbers to the page
+      setInterval(function() {
+        const numCharacters = Math.floor(Math.random() * 5 + 8); // Randomly choose between 8-12 characters for the group
+        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        const group = [];
+        for (let i = 0; i < numCharacters; i++) {
+          const character = characters.charAt(Math.floor(Math.random() * characters.length));
+          group.push(character);
+        }
+        const groupSize = group.length;
+        const groupSpacing = Math.floor(Math.random() * 40 + 20); // Random spacing between groups
+        const groupTop = Math.floor(Math.random() * -500) - (groupSize * 50) - groupSpacing;
+        for (let i = 0; i < groupSize; i++) {
+          const element = document.createElement("span");
+          element.innerHTML = group[i];
+          element.style.position = "absolute";
+          element.style.top = groupTop + (i * 50) + "px";
+          element.style.left = Math.floor(Math.random() * (window.innerWidth - 20)) + "px";
+          if (Math.random() < 0.5) {
+            element.style.fontSize = Math.floor(Math.random() * 16 + 24) + "px"; // Larger font size
+          } else {
+            element.style.fontSize = Math.floor(Math.random() * 16 + 8) + "px"; // Smaller font size
+          }
+          document.body.appendChild(element);
+          setTimeout(function() {
+            element.style.transition = "top 3s linear";
+            element.style.top = window.innerHeight + "px";
+            setTimeout(function() {
+              element.remove();
+            }, 3000);
+          }, 0);
+        }
+      }, 50); // Interval time increased to prevent performance issues
+    </script>
+  </body>
+</html>
